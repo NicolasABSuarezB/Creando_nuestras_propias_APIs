@@ -8,14 +8,17 @@ const app = express();
 const indexRouter = require('./routes/index');
 const moviesRoutes = require('./routes/moviesRoutes');
 const genresRoutes = require('./routes/genresRoutes');
+const genresRouterApi = require('./routes/apiRouter/genresApiRoutes')
+const moviesRouterApi = require('./routes/apiRouter/moviesApiRoutes')
+const actorsRouterApi = require('./routes/apiRouter/actorsApiRoutes')
 
-//Aquí pueden colocar las rutas de las APIs
 
 
 // view engine setup
 app.set('views', path.resolve(__dirname, './views'));
 app.set('view engine', 'ejs');
 
+app.use(express.json())
 app.use(express.static(path.resolve(__dirname, '../public')));
 
 //URL encode  - Para que nos pueda llegar la información desde el formulario al req.body
@@ -28,6 +31,10 @@ app.use('/', indexRouter);
 app.use(moviesRoutes);
 app.use(genresRoutes);
 
+//Aquí pueden colocar las rutas de las APIs
+app.use('/api', genresRouterApi)
+app.use('/apiMovies', moviesRouterApi)
+app.use('/apiActors', actorsRouterApi)
 
 //Activando el servidor desde express
-app.listen('3001', () => console.log('Servidor corriendo en el puerto 3001'));
+app.listen('3010', () => console.log('Servidor corriendo en el puerto 3010'));
